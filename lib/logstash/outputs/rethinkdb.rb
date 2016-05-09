@@ -1,6 +1,8 @@
 # encoding: utf-8
 require "logstash/outputs/base"
 require "logstash/namespace"
+require "rethinkdb"
+include RethinkDB::Shortcuts
 
 # An example output that does nothing.
 class LogStash::Outputs::RethinkDB < LogStash::Outputs::Base
