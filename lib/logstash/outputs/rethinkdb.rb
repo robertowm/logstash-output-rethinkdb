@@ -38,6 +38,18 @@ class LogStash::Outputs::RethinkDB < LogStash::Outputs::Base
 
   public
   def receive(event)
-    return "Event received"
+    begin
+      @codec.encode(event)
+    rescue LocalJumpError
+      raise
+    rescue StandardError => e
+      @logger.warn("Error encoding event", :exception => e, :event => event)
+    end
   end # def event
+
+  def send_to_rethinkdb(event, payload)
+    r.table(@table)
+      .insert(payload)
+      .run(@conn)
+  end
 end # class LogStash::Outputs::RethinkDB
