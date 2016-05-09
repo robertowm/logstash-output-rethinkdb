@@ -8,6 +8,13 @@ include RethinkDB::Shortcuts
 class LogStash::Outputs::RethinkDB < LogStash::Outputs::Base
   config_name "rethinkdb"
 
+  default :codec, "json"
+
+  config :host,  :validate => :string, :default => "localhost"
+  config :port,  :validate => :number, :default => 28015
+  config :db,    :validate => :string, :default => "stone"
+  config :table, :validate => :string, :default => "table"
+
   public
   def register
   end # def register
