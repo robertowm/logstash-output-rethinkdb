@@ -17,6 +17,23 @@ class LogStash::Outputs::RethinkDB < LogStash::Outputs::Base
 
   public
   def register
+    begin
+      @conn = r.connect(
+        :host => @host,
+        :port => @port
+      )
+    rescue Exception => err
+      logger.error "Cannot connect to RethinkDB database #{@host}:#{@port} (#{err.message})"
+      Process.exit(1)
+    end
+
+    begin
+      r.db_create(@db).run(@conn)
+    rescue RethinkDB::RqlRuntimeError => err
+      logger.info "Database `#{@db}` already exists."
+    end
+
+    @codec.on_event(&method(:send_to_rethinkdb))
   end # def register
 
   public
