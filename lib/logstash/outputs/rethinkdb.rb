@@ -45,7 +45,7 @@ class LogStash::Outputs::RethinkDB < LogStash::Outputs::Base
     obj = format_event(event)
     r.db(@db)
       .table(@table)
-      .insert(obj)
+      .insert(obj, :conflict => "replace")
       .run(@conn)
   end # def event
 
