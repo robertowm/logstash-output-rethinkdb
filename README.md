@@ -8,14 +8,22 @@ It is fully free and fully open source. The license is Apache 2.0, meaning you a
 
 ## Documentation
 
-Logstash provides infrastructure to automatically generate documentation for this plugin. We use the asciidoc format to write documentation so any comments in the source code will be first converted into asciidoc and then into html. All plugin documentation are placed under one [central location](http://www.elastic.co/guide/en/logstash/current/).
+It is a Logstash output plugin to RethinkDB.  It supports the following configurations:
 
-- For formatting code or config example, you can use the asciidoc `[source,ruby]` directive
-- For more asciidoc formatting tips, see the excellent reference here https://github.com/elastic/docs#asciidoc-guide
+* host (type: string, default: "localhost")
+* port (type: number, default: 28015)
+* db (type: string, default: "stone")
+* table(type: string, default: "table")
 
-## Need Help?
+We tested at Logstash 2.3.1.  Before installing this plugin, you need to installing
+the RethinkDB client.  The following steps details how to install it.  Consider that
+Logstash is installed at */opt/logstash*.
 
-Need help? Try #logstash on freenode IRC or the https://discuss.elastic.co/c/logstash discussion forum.
+* Set GEM_HOME as an environment variable with */opt/logstash/vendor/bundle/jruby/1.9*
+* Run the commandline */opt/logstash/vendor/jruby/bin/jruby /opt/logstash/vendor/jruby/bin/gem install rethinkdb*
+* Edit */opt/logstash/Gemfile* to include the line *gem "rethinkdb"*
+
+More details at http://stackoverflow.com/questions/25984620/how-to-add-gems-into-logstash
 
 ## Developing
 
